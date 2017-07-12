@@ -27,11 +27,11 @@ public class Answer {
 	private String date;
 	
 	@ManyToOne
-	@JoinColumn(name="user_id")
+//	@JoinColumn(name="user_id")
 	private User user;
 
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="question_id")
+	@ManyToOne
+//	@JoinColumn(name="question_id")
 	private Question question;
 	
 	

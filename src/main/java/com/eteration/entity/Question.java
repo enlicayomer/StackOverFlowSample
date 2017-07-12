@@ -10,11 +10,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="question")
@@ -24,7 +26,7 @@ public class Question {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="question_id")
 	private Long id;
-
+	
 	@Column(name="question_header")
 	private String header;
 
@@ -34,28 +36,25 @@ public class Question {
 	@Column(name="question_date")
 	private String date;
 
-	@ManyToOne
-	@JoinColumn(name="user_id")
-	private User user;
+	@ManyToMany
+	@JsonManagedReference	
+	private List<User> users=new ArrayList<User>();
 
+	@JsonIgnore
 	@OneToMany(mappedBy="question",cascade=CascadeType.ALL)
 	private List<Answer> answers=new ArrayList<Answer>();
-	
+	@JsonIgnore
 	@ManyToMany(cascade=CascadeType.ALL)
-	  @JoinTable(
-	      name="Qst_Cat",
-	      joinColumns=@JoinColumn(name="que_id", referencedColumnName="question_id"),
-			inverseJoinColumns = @JoinColumn(name = "cat_id", referencedColumnName = "category_id"))
-	private List<Category> category;
+	private List<Category> category=new ArrayList<Category>();
 
 	
 	
-	public Question(String header, String body, String date, User user, List<Category> category) {
+	public Question(String header, String body, String date, List<User> users, List<Category> category) {
 		super();
 		this.header = header;
 		this.body = body;
 		this.date = date;
-		this.user = user;
+		this.users = users;
 		this.category = category;
 	}
 
@@ -112,13 +111,23 @@ public class Question {
 		this.date = date;
 	}
 
-	public User getUser() {
-		return user;
+	public List<User> getUsers() {
+		return users;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUsers(List<User> users) {
+		this.users = users;
 	}
+
+	public List<Answer> getAnswers() {
+		return answers;
+	}
+
+	public void setAnswers(List<Answer> answers) {
+		this.answers = answers;
+	}
+
+
 
 
 	

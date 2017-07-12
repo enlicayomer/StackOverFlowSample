@@ -9,8 +9,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "user")
@@ -30,9 +35,11 @@ public class User {
 	@Column(name = "user_password")
 	private String password;
 
-	@OneToMany(mappedBy="user",cascade=CascadeType.ALL)
+	@JsonBackReference	
+	@ManyToMany(mappedBy="users",cascade=CascadeType.ALL)
 	private List<Question> questions=new ArrayList<Question>();
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="user" , cascade=CascadeType.ALL)
 	private List<Answer> answers=new ArrayList<Answer>();
 	
