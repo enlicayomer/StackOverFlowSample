@@ -1,5 +1,6 @@
 package com.eteration.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,22 +28,24 @@ public class Answer {
 	
 	@ManyToOne
 	@JoinColumn(name="user_id")
-	private User author;
+	private User user;
 
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="question_id")
 	private Question question;
+	
+	
 	
 	
 	public Answer() {
 		super();
 	}
 
-	public Answer(String body, String date, User author, Question question) {
+	public Answer(String body, String date, User user, Question question) {
 		super();
 		this.body = body;
 		this.date = date;
-		this.author = author;
+		this.user = user;
 		this.question = question;
 	}
 
@@ -78,11 +81,13 @@ public class Answer {
 		this.date = date;
 	}
 
-	public User getAuthor() {
-		return author;
+	public User getUser() {
+		return user;
 	}
 
-	public void setAuthor(User author) {
-		this.author = author;
+	public void setUser(User user) {
+		this.user = user;
 	}
+ 
+	
 }

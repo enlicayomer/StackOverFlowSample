@@ -23,7 +23,7 @@ public class AnswerController {
 	@PostMapping("add")
 	public ResponseEntity<Answer> addAnswer(@RequestBody Answer answer)
 	{
-		return new ResponseEntity<Answer>(answerRepository.save(new Answer(answer.getBody(), answer.getDate(), answer.getAuthor(), answer.getQuestion())),HttpStatus.CREATED);
+		return new ResponseEntity<Answer>(answerRepository.save(new Answer(answer.getBody(), answer.getDate(), answer.getUser(), answer.getQuestion())),HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping("delete/{answerId}")

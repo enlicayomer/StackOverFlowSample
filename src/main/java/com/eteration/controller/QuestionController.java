@@ -28,7 +28,7 @@ public class QuestionController {
 	@PostMapping("add")
 	public Question addQuesetion(@RequestBody Question question)
 	{
-		return questionRepository.save(new Question(question.getHeader(),question.getBody(),question.getDate(),question.getAuthor(),question.getCategory()));
+		return questionRepository.save(new Question(question.getHeader(),question.getBody(),question.getDate(),question.getUser(),question.getCategory()));
 	}
 	
 //	@RequestMapping(method = RequestMethod.POST)

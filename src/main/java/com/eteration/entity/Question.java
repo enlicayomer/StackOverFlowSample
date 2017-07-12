@@ -1,5 +1,6 @@
 package com.eteration.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -35,10 +36,10 @@ public class Question {
 
 	@ManyToOne
 	@JoinColumn(name="user_id")
-	private User author;
+	private User user;
 
 	@OneToMany(mappedBy="question",cascade=CascadeType.ALL)
-	private List<Answer> answer;
+	private List<Answer> answers=new ArrayList<Answer>();
 	
 	@ManyToMany(cascade=CascadeType.ALL)
 	  @JoinTable(
@@ -49,12 +50,12 @@ public class Question {
 
 	
 	
-	public Question(String header, String body, String date, User author, List<Category> category) {
+	public Question(String header, String body, String date, User user, List<Category> category) {
 		super();
 		this.header = header;
 		this.body = body;
 		this.date = date;
-		this.author = author;
+		this.user = user;
 		this.category = category;
 	}
 
@@ -72,11 +73,11 @@ public class Question {
 	}
 
 	public List<Answer> getAnswer() {
-		return answer;
+		return answers;
 	}
 
 	public void setAnswer(List<Answer> answer) {
-		this.answer = answer;
+		this.answers = answer;
 	}
 
 	public Long getId() {
@@ -111,13 +112,16 @@ public class Question {
 		this.date = date;
 	}
 
-	public User getAuthor() {
-		return author;
+	public User getUser() {
+		return user;
 	}
 
-	public void setAuthor(User author) {
-		this.author = author;
+	public void setUser(User user) {
+		this.user = user;
 	}
+
+
+	
 
 
 }
